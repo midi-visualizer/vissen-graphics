@@ -8,14 +8,15 @@ module Vissen
     # Note that effects are single threaded and should not be configured from
     # multiple threads.
     module Effect
+      ABSOLUTE       = true
       DEFAULT_PARAMS = {}.freeze
 
       attr_reader :params
 
-      def initialize(grid, params = {})
-        raise TypeError unless grid.is_a? Output::Grid
+      def initialize(context, params = {})
+        raise TypeError unless context.is_a? Output::GridContext
 
-        @grid   = grid
+        @grid   = context
         @params = self.class::DEFAULT_PARAMS.dup
 
         configure params

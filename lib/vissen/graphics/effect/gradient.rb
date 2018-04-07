@@ -28,7 +28,7 @@ module Vissen
         end
 
         def update(_, layer)
-          layer.vixels.each_with_index { |v, i| v.q = @gradient[i] }
+          layer.vixels.each_with_index { |v, i| v.p = @gradient[i] }
         end
 
         private
