@@ -11,17 +11,17 @@ module Vissen
           x:         0.5,
           y:         0.5,
           radius:    0.5,
-          blur:      0.1
+          spread:    0.1
         }.freeze
 
-        def initialize(grid, *)
-          @vignette = grid.alloc_points { 0.0 }
+        def initialize(context, *)
+          @vignette = context.alloc_points { 0.0 }
           super
         end
 
         def configure(*)
           super
-          generate_gradient!
+          generate_vignette!
         end
 
         def update(_, layer)
@@ -37,14 +37,26 @@ module Vissen
         #
         # Note that this method has side-effects.
         def generate_vignette!
-          x0 = params[:x]
-          y0 = params[:y]
-          radius_squared = params[:radius]**2
+          x0     = params[:x]
+          y0     = params[:y]
+          radius = params[:radius]
+          spread = params[:spread]
+
+          inner_radius_squared = spread >= radius ? 0.0 : (radius - spread)**2
+          outer_radius_squared = radius**2
           
-          grid.distance_squared(x0, y0, @vignette)
+          context.distance_squared x0, y0, @vignette
           
           @vignette.map! do |distance_squared|
-            distance_squared < radius_squared ? 1.0 : 0.0
+            
+            if distance_squared <= inner_radius_squared
+              1.0
+            elsif distance_squared >= outer_radius_squared
+              0.0
+            else
+              distance = Math.sqrt(distance_squared)
+              (radius - distance) / spread
+            end
           end
         end
       end
