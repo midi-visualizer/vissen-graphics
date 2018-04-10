@@ -14,10 +14,10 @@ module Vissen
       attr_reader :params
 
       def initialize(context, params = {})
-        raise TypeError unless context.is_a? Output::GridContext
+        raise TypeError unless context.is_a? Output::Context
 
-        @grid   = context
-        @params = self.class::DEFAULT_PARAMS.dup
+        @context = context
+        @params  = self.class::DEFAULT_PARAMS.dup
 
         configure params
       end
@@ -32,7 +32,7 @@ module Vissen
 
       protected
 
-      attr_reader :grid
+      attr_reader :context
     end
   end
 end
