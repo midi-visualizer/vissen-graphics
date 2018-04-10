@@ -17,8 +17,8 @@ module Vissen
           spread:    0.3
         }.freeze
 
-        def initialize(grid, *)
-          @gradient = grid.alloc_points { 0.0 }
+        def initialize(context, *)
+          @gradient = context.alloc_points { 0.0 }
           super
         end
 
@@ -40,10 +40,10 @@ module Vissen
         #
         # Note that this method has side-effects.
         def generate_gradient!
-          x0 = grid.width  / 2.0
-          y0 = grid.height / 2.0
+          x0 = context.width  / 2.0
+          y0 = context.height / 2.0
 
-          grid.each_position do |index, x, y|
+          context.each_position do |index, x, y|
             # Calculate the offset to the center of the gradient
             x_offset = x - x0
             y_offset = y - y0
