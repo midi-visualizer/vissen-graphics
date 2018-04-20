@@ -39,23 +39,21 @@ module Vissen
         #
         # Note that this method has side-effects.
         def generate_vignette!
-          x0     = params[:x]
-          y0     = params[:y]
+          x      = params[:x]
+          y      = params[:y]
           radius = params[:radius]
           spread = params[:spread]
 
           inner_radius_squared = spread >= radius ? 0.0 : (radius - spread)**2
           outer_radius_squared = radius**2
 
-          context.distance_squared x0, y0, @vignette
-
-          @vignette.map! do |distance_squared|
-            if distance_squared <= inner_radius_squared
+          context.distance_squared(x, y, @vignette).map! do |d2|
+            if d2 <= inner_radius_squared
               1.0
-            elsif distance_squared >= outer_radius_squared
+            elsif d2 >= outer_radius_squared
               0.0
             else
-              distance = Math.sqrt(distance_squared)
+              distance = Math.sqrt d2
               (radius - distance) / spread
             end
           end
