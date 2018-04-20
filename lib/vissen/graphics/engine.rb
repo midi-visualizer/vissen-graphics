@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Vissen
   module Graphics
     # Engine
@@ -22,11 +24,11 @@ module Vissen
 
       def configure(*params, value); end
 
-      def render(t, pixel_cloud)
+      def render(_t, pixel_cloud)
         # Update all the animations
-        
+
         # Render all effects
-        
+
         # Finally render the vixels to the pixel cloud
         @vixel_stack.render pixel_cloud
       end

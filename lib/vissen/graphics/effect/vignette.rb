@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Vissen
   module Graphics
     module Effect
@@ -44,11 +46,10 @@ module Vissen
 
           inner_radius_squared = spread >= radius ? 0.0 : (radius - spread)**2
           outer_radius_squared = radius**2
-          
+
           context.distance_squared x0, y0, @vignette
-          
+
           @vignette.map! do |distance_squared|
-            
             if distance_squared <= inner_radius_squared
               1.0
             elsif distance_squared >= outer_radius_squared

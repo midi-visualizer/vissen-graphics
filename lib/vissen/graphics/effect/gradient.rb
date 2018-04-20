@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Vissen
   module Graphics
     module Effect
@@ -41,8 +43,7 @@ module Vissen
         #
         # Note that this method has side-effects.
         def generate_gradient!
-          x0 = context.width  / 2.0
-          y0 = context.height / 2.0
+          x0, y0 = context.center
 
           context.each_position do |index, x, y|
             # Calculate the offset to the center of the gradient
@@ -58,6 +59,7 @@ module Vissen
             # the corners of a square
             a = Math.cos(theta) *
                 Math.sqrt(x_offset**2 + y_offset**2) * A_FACTOR
+
             @gradient[index] = a * params[:spread] + params[:mean]
           end
         end

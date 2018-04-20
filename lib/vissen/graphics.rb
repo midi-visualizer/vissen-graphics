@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'vissen/graphics/version'
 
 require 'vissen/output'
