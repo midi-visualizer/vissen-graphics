@@ -5,7 +5,7 @@ require 'vissen/graphics/effect'
 require 'vissen/graphics/effect/cyclic_noise'
 require 'vissen/graphics/effect/gradient'
 require 'vissen/graphics/effect/vignette'
-require 'vissen/graphics/context'
+require 'vissen/graphics/engine'
 
 module Vissen
   # Graphics

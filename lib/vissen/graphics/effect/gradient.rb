@@ -1,15 +1,9 @@
 module Vissen
   module Graphics
     module Effect
-      # Gradient
-      #
       # Generates a static gradient.
       class Gradient
         include Effect
-
-        # Compute the factor that should be used to scale a in
-        # #generate_gradient!
-        A_FACTOR = 1.0 / Math.sqrt(2.0 * 0.5**2)
 
         DEFAULT_PARAMS = {
           mean:      0.5,
@@ -17,21 +11,28 @@ module Vissen
           spread:    0.3
         }.freeze
 
+        # @see Effect
         def initialize(context, *)
           @gradient = context.alloc_points { 0.0 }
           super
         end
 
+        # @see Effect
         def configure(*)
           super
           generate_gradient!
         end
 
+        # @see Effect
         def update(_, layer)
           layer.vixels.each_with_index { |v, i| v.p = @gradient[i] }
         end
 
         private
+
+        # Compute the factor that should be used to scale a in
+        # #generate_gradient!
+        A_FACTOR = 1.0 / Math.sqrt(2.0 * 0.5**2)
 
         # Generate Gradient
         #

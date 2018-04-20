@@ -7,8 +7,8 @@ end
 describe Vissen::Graphics::Effect do
   subject { TestGraphicsEffectTarget }
 
-  let(:context) { Vissen::Output::GridContext.new 2, 3 }
-  let(:grid)    { Vissen::Output::VixelCloud.new context }
+  let(:context) { Vissen::Output::Context::Grid.new 2, 3 }
+  let(:grid)    { Vissen::Output::VixelBuffer.new context }
   let(:params)  { { test: true } }
   let(:effect)  { subject.new context, params }
 

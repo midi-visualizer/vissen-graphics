@@ -1,10 +1,11 @@
 module Vissen
   module Graphics
-    # Context
+    # Engine
     #
     #
-    class Context
+    class Engine
       def initialize(vixel_stack)
+        @vixel_stack = vixel_stack
         @params = {}
         # Create a mixer for each vixel layer
         @mixers = vixel_stack.layers.map { |layer| Mixer.new layer }
@@ -21,7 +22,14 @@ module Vissen
 
       def configure(*params, value); end
 
-      def update!(t); end
+      def render(t, pixel_cloud)
+        # Update all the animations
+        
+        # Render all effects
+        
+        # Finally render the vixels to the pixel cloud
+        @vixel_stack.render pixel_cloud
+      end
     end
   end
 end

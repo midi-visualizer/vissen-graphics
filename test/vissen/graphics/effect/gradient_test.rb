@@ -7,8 +7,8 @@ describe Vissen::Graphics::Effect::Gradient do
   let(:rows)     { 2 }
   let(:columns)  { 3 }
   let(:palettes) { [[]] }
-  let(:context)  { Vissen::Output::GridContext.new 2, 3 }
-  let(:grid)     { Vissen::Output::VixelCloud.new context }
+  let(:context)  { Vissen::Output::Context::Grid.new 2, 3 }
+  let(:grid)     { Vissen::Output::VixelBuffer.new context }
   let(:effect)   { subject.new context }
   let(:t)        { 0 }
 
