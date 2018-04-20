@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     vissen-graphics (0.1.0)
-      vissen-output (~> 0.4)
+      vissen-output (~> 0.6)
 
 GEM
   remote: https://rubygems.org/
@@ -16,7 +16,7 @@ GEM
       json (>= 1.8, < 3)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.2)
-    vissen-output (0.4.0)
+    vissen-output (0.6.1)
 
 PLATFORMS
   ruby
