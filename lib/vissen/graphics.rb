@@ -26,6 +26,7 @@ require 'vissen/graphics/effect/base'
 # require 'vissen/graphics/effect/cyclic_noise'
 require 'vissen/graphics/effect/gradient'
 require 'vissen/graphics/effect/vignette'
+require 'vissen/graphics/effect/point'
 
 require 'vissen/graphics/mixer'
 

@@ -30,7 +30,7 @@ module Vissen
           inner_radius_squared = spread >= radius ? 0.0 : (radius - spread)**2
           outer_radius_squared = radius**2
 
-          context.distance_squared(x, y, @vignette).each do |d2|
+          context.distance_squared(x, y, @vignette).each_with_index do |d2, i|
             value =
               if d2 <= inner_radius_squared
                 1.0
@@ -41,7 +41,7 @@ module Vissen
                 (radius - distance) / spread
               end
 
-            yield value
+            yield value, i
           end
         end
       end

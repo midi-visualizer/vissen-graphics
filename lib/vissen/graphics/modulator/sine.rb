@@ -13,7 +13,7 @@ module Vissen
         output Value::Real
 
         def update(t)
-          Math.sin(t * param.frequency) * 0.5 + 0.5
+          Math.sin(t * param.frequency * Math::PI * 2.0) * 0.5 + 0.5
         end
       end
     end

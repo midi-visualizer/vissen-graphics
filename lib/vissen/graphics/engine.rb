@@ -64,6 +64,9 @@ module Vissen
         end
         
         head = tail.first_in_chain
+        
+        return [] if head == tail
+        
         tail.delete
         list = Linked::List.new.push(head)
                 

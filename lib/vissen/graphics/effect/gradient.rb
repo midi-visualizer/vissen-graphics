@@ -13,6 +13,8 @@ module Vissen
         # #generate_gradient!
         A_FACTOR = 1.0 / Math.sqrt(2.0 * 0.5**2)
         private_constant :A_FACTOR
+        
+        ANGLE_FACTOR = (2.0 * Math::PI)
 
         DEFAULTS = {
           mean:   0.5,
@@ -23,7 +25,7 @@ module Vissen
         def update(_)
           x0, y0 = context.center
 
-          angle  = param.angle
+          angle  = param.angle * ANGLE_FACTOR
           spread = param.spread
           mean   = param.mean
 
