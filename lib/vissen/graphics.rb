@@ -18,6 +18,7 @@ require 'vissen/graphics/modulator'
 require 'vissen/graphics/modulator/base'
 require 'vissen/graphics/modulator/bias'
 require 'vissen/graphics/modulator/ramp'
+require 'vissen/graphics/modulator/sine'
 require 'vissen/graphics/modulator/splitter'
 
 require 'vissen/graphics/effect'
