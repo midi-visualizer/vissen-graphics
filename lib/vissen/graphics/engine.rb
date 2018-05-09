@@ -6,31 +6,68 @@ module Vissen
     #
     #
     class Engine
-      def initialize(vixel_stack)
-        @vixel_stack = vixel_stack
-        @params = {}
+      MATCHER = ->(mod) { ->(e) { e.value == mod } }
+      private_constant :MATCHER
+      
+      def initialize(mixers)
         # Create a mixer for each vixel layer
-        @mixers = vixel_stack.layers.map { |layer| Mixer.new layer }
+        @mixers = mixers
+        @mutex  = Mutex.new
+        @modulators = modulators mixers
+        
+        freeze
       end
 
-      def create_effect(layer, effect_klass,
-                        mix: [0.0, 1.0], **effect_config)
-        @mixers[layer].create_effect(effect_klass, mix, **effect_config)
+      def render(t)
+        @mutex.synchronize do
+          @modulators.each { |modulator| modulator.update! t }
+          @mixers.each(&:render!)
+        end
       end
-
-      def attach(label, configurable)
-        @params[label] = configurable
+      
+      private
+      
+      def expand_params(before_item)
+        before_item.value.params.each do |_, param|
+          next if param.constant?
+          
+          mod = param.modulator
+          mod_matcher = MATCHER.call mod
+          
+          if before_item.after.find(&mod_matcher)
+            raise RuntimeError, 'Cyclic parameter dependency'
+          elsif before_item.before.find(&mod_matcher)
+            next
+          end
+          
+          item = Linked::Item.new mod
+          before_item.prepend item
+          
+          expand_params item
+        end
       end
-
-      def configure(*params, value); end
-
-      def render(_t, pixel_cloud)
-        # Update all the animations
-
-        # Render all effects
-
-        # Finally render the vixels to the pixel cloud
-        @vixel_stack.render pixel_cloud
+      
+      def modulators(mixers)
+        tail = Linked::Item.new
+        mixers.each do |mixer|
+          mixer_item = Linked::Item.new mixer
+          effect_item = Linked::Item.new mixer.effect
+          
+          tail.prepend effect_item
+          expand_params effect_item
+          
+          tail.prepend mixer_item
+          expand_params mixer_item
+          
+          effect_item.delete
+          mixer_item.delete
+        end
+        
+        head = tail.first_in_chain
+        tail.delete
+        list = Linked::List.new.push(head)
+                
+        list.map(&:value)
       end
     end
   end

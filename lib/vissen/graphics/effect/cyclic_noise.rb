@@ -7,9 +7,8 @@ module Vissen
       #
       #
       class CyclicNoise
-        include Vissen::Graphics::Effect
+        include Effect
 
-        ABSOLUTE       = false
         DEFAULT_PARAMS = {
           amplitude: 0.2,
           f:         0.4,
@@ -29,14 +28,13 @@ module Vissen
           params[:w] = 2 * Math::PI * params[:f]
         end
 
-        def update(t, grid)
+        def update(t)
           amplitude = params[:amplitude]
           noise     = params[:noise]
           w         = params[:w]
 
-          grid.vixels.each_with_index do |vixel, i|
-            phase = noise * @phase[i]
-            vixel.p += amplitude * Math.cos(t * w + phase)
+          @phase.each_with_index do |phase, i|
+            yield amplitude * Math.cos(t * w + phase * noise), i
           end
         end
 
