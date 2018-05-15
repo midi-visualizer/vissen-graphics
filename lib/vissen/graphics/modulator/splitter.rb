@@ -3,6 +3,10 @@
 module Vissen
   module Graphics
     module Modulator
+      # The splitter modulator exposes each component in a Value::Vec type as an
+      # input that can be set individually.
+      #
+      # TODO: consider changing the name to Merger or Combiner.
       class Splitter < Base
         real :input_a
         real :input_b

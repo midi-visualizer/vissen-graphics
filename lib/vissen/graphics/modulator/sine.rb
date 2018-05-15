@@ -3,6 +3,8 @@
 module Vissen
   module Graphics
     module Modulator
+      # The sine modulator produces a sine wave with a given frequency and
+      # phase.
       class Sine < Base
         real :frequency, default: 1.0
         real :phase

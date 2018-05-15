@@ -3,6 +3,7 @@
 module Vissen
   module Graphics
     module Modulator
+      # The Sum modulator produces a sum of two inputs.
       class Sum < Base
         real :input_a
         real :input_b

@@ -12,10 +12,7 @@ module Vissen
         real :spread, default: 0.1
 
         def call(param)
-          x, y   = param.pos
-          radius = param.radius
-          spread = param.spread
-
+          x, y     = param.pos
           value_fn = create_value_function param.radius, param.spread
 
           proc do |context, block|

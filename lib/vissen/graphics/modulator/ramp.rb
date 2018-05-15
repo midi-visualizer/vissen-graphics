@@ -3,15 +3,17 @@
 module Vissen
   module Graphics
     module Modulator
+      # The ramp produces a saw tooth signal with a given period that can be
+      # offset to start at t_0.
       class Ramp < Base
         real :period, default: 1.0
-        real :offset
+        real :t_0
         real :t
 
         output Value::Real
 
         def call(param)
-          (param.t - param.offset % param.period) / param.period
+          (param.t - param.t_0 % param.period) / param.period
         end
       end
     end

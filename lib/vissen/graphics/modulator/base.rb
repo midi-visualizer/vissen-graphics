@@ -3,13 +3,21 @@
 module Vissen
   module Graphics
     module Modulator
+      # Modulators are nothing more than Parameterized function blocks.
+      #
+      # === Usage
+      #
+      #   class Inverter < Base
+      #     real :input
+      #     output Value::Real
+      #
+      #     def call(param)
+      #       -param.input
+      #     end
+      #   end
       class Base
         include Parameterized
         extend  Parameterized::DSL
-
-        # def initialize(parameters:, output:, **setup)
-        #   super(parameters: parameters, output: output, setup: setup)
-        # end
       end
     end
   end

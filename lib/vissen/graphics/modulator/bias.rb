@@ -3,6 +3,8 @@
 module Vissen
   module Graphics
     module Modulator
+      # The bias modulator takes an input, multiplies it with an amplitude and
+      # adds an offset to produce its output.
       class Bias < Base
         real :input
         real :offset
