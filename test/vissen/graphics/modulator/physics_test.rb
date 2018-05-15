@@ -39,7 +39,7 @@ describe Vissen::Graphics::Modulator::Physics do
     physics.set :position, 0.5
     physics.set :velocity, 0.5
     physics.set :acceleration, 0.5
-    physics.set :offset, 0.5
+    physics.set :t_0, 0.5
 
     assert_equal 0.5, physics_at.call(0.5)
     assert_equal 0.875, physics_at.call(1.0)

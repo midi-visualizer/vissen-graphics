@@ -23,7 +23,7 @@ describe Vissen::Graphics::Modulator::Ramp do
   end
 
   it 'accepts an offset' do
-    ramp.set :offset, 0.5
+    ramp.set :t_0, 0.5
     assert_equal 0.25, ramp_at.call(1.0)
   end
 end
