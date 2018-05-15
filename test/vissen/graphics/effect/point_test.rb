@@ -30,48 +30,48 @@ describe Vissen::Graphics::Effect::Point do
       assert_in_delta 0.535, grid[context.index_from(1, 2)]
     end
   end
-  
+
   describe 'spread' do
     it 'renders with the specified spread' do
       effect.set :spread, 2.0
       effect.tainted?
       effect.value.call(context, proc { |v, i| grid[i] = v })
-      
+
       assert_in_delta 0.882, grid[context.index_from(0, 0)]
       assert_in_delta 0.939, grid[context.index_from(0, 1)]
       assert_in_delta 0.882, grid[context.index_from(0, 2)]
-      
+
       assert_in_delta 0.939, grid[context.index_from(1, 0)]
       assert_in_delta 1.000, grid[context.index_from(1, 1)]
       assert_in_delta 0.939, grid[context.index_from(1, 2)]
     end
-    
+
     it 'can produce a sharp point' do
       effect.set :spread, 0.0
       effect.set :position, context.position(0)
       effect.tainted?
       effect.value.call(context, proc { |v, i| grid[i] = v })
-      
+
       assert_in_delta 1.0, grid[context.index_from(0, 0)]
       assert_in_delta 0.0, grid[context.index_from(0, 1)]
       assert_in_delta 0.0, grid[context.index_from(0, 2)]
-      
+
       assert_in_delta 0.0, grid[context.index_from(1, 0)]
       assert_in_delta 0.0, grid[context.index_from(1, 1)]
       assert_in_delta 0.0, grid[context.index_from(1, 2)]
     end
   end
-  
+
   describe 'value' do
     it 'renders with the specified max value' do
       effect.set :value, 0.5
       effect.tainted?
       effect.value.call(context, proc { |v, i| grid[i] = v })
-      
+
       assert_in_delta 0.143, grid[context.index_from(0, 0)]
       assert_in_delta 0.267, grid[context.index_from(0, 1)]
       assert_in_delta 0.143, grid[context.index_from(0, 2)]
-      
+
       assert_in_delta 0.267, grid[context.index_from(1, 0)]
       assert_in_delta 0.500, grid[context.index_from(1, 1)]
       assert_in_delta 0.267, grid[context.index_from(1, 2)]
