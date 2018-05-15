@@ -3,7 +3,7 @@
 module Vissen
   module Graphics
     module Effect
-      # Generates a static gradient.
+      # Renders a point in 2D space.
       class Point < Base
         vec  :position, default: [0.5, 0.5]
         real :value, default: 1.0
@@ -16,8 +16,7 @@ module Vissen
           fn = create_threshold_function param.spread
 
           proc do |context, block|
-            context.each_position do |index, x_i, y_i|
-              d2 = (x - x_i)**2 + (y - y_i)**2
+            context.distance_squared(x, y).with_index do |d2, index|
               block.call max_value * fn.call(d2), index
             end
           end
