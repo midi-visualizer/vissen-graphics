@@ -4,17 +4,13 @@ module Vissen
   module Graphics
     module Modulator
       class Bias < Base
-        DEFAULTS = {
-          amplitude: 1.0
-        }.freeze
-
-        param input: Value::Real
-        param offset: Value::Real
-        param amplitude: Value::Real
+        real :input
+        real :offset
+        real :amplitude, default: 1.0
 
         output Value::Real
 
-        def update(_)
+        def call(param)
           param.input * param.amplitude + param.offset
         end
       end

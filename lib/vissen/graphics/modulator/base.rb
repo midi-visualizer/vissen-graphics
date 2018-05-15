@@ -3,22 +3,13 @@
 module Vissen
   module Graphics
     module Modulator
-      class Base < Parameterized
-        include Modulator
+      class Base
+        include Parameterized
+        extend  Parameterized::DSL
 
-        DEFAULTS = {}.freeze
-
-        def initialize(**initial_values)
-          super(self.class.output_value_klass, **initial_values)
-        end
-
-        class << self
-          attr_reader :output_value_klass
-
-          def output(klass)
-            @output_value_klass = klass
-          end
-        end
+        # def initialize(parameters:, output:, **setup)
+        #   super(parameters: parameters, output: output, setup: setup)
+        # end
       end
     end
   end

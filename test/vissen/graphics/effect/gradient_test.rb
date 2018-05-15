@@ -9,16 +9,8 @@ describe Vissen::Graphics::Effect::Gradient do
   let(:columns)  { 3 }
   let(:context)  { Vissen::Output::Context::Grid.new rows, columns }
   let(:grid)     { Vissen::Output::VixelBuffer.new context }
-  let(:effect)   { subject.new context }
+  let(:effect)   { subject.new }
   let(:t)        { 0 }
-
-  describe '#set' do
-    it 'updates the parameters' do
-      refute_equal 0.5, effect.param.angle
-      effect.set :angle, 0.5
-      assert_equal 0.5, effect.param.angle
-    end
-  end
 
   describe '#update' do
     before do
@@ -27,7 +19,9 @@ describe Vissen::Graphics::Effect::Gradient do
 
     it 'draws a horizontal gradient' do
       effect.set :angle, 0.0
-      effect.update(t) { |v, i| grid.vixels[i].p = v }
+      effect.tainted?
+
+      effect.value.call(context, proc { |v, i| grid.vixels[i].p = v })
 
       assert_equal 0.0, grid[0, 0].p
       assert_equal 0.5, grid[0, 1].p
@@ -39,10 +33,12 @@ describe Vissen::Graphics::Effect::Gradient do
     end
 
     it 'draws a vertical gradient' do
-      effect.set :angle, Math::PI / 2
-      effect.update(t) { |v, i| grid.vixels[i].p = v }
+      effect.set :angle, 0.25
+      effect.tainted?
 
-      deviation = grid.height / 2 / Math.sqrt(2 * 0.5**2)
+      effect.value.call(context, proc { |v, i| grid.vixels[i].p = v })
+
+      deviation  = grid.height / 2 / Math.sqrt(2 * 0.5**2)
       top_row    = 0.5 + deviation
       bottom_row = 0.5 - deviation
 

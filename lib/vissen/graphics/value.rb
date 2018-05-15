@@ -11,7 +11,7 @@ module Vissen
         @value   = nil
         @tainted = true
 
-        write (value || self.class::DEFAULT)
+        write(value || self.class::DEFAULT)
       end
 
       def write(new_value)

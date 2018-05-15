@@ -4,12 +4,12 @@ module Vissen
   module Graphics
     module Modulator
       class Splitter < Base
-        param input_a: Value::Real
-        param input_b: Value::Real
+        real :input_a
+        real :input_b
 
         output Value::Vec
 
-        def update(_)
+        def call(param)
           [param.input_a, param.input_b]
         end
       end

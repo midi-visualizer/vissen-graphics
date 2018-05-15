@@ -4,16 +4,14 @@ module Vissen
   module Graphics
     module Modulator
       class Ramp < Base
-        DEFAULTS = {
-          period: 1.0
-        }.freeze
-
-        param period: Value::Real
+        real :period, default: 1.0
+        real :offset
+        real :t
 
         output Value::Real
 
-        def update(t)
-          (t % param.period) / param.period
+        def call(param)
+          (param.t - param.offset % param.period) / param.period
         end
       end
     end

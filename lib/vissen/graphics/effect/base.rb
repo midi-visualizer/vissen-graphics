@@ -3,11 +3,12 @@
 module Vissen
   module Graphics
     module Effect
-      class Base < Parameterized
-        include Effect
+      class Base
+        include Parameterized
+        extend  Parameterized::DSL
 
-        def initialize(context, **initial_values)
-          super
+        def initialize(output:, **opts)
+          super(output: output || Renderer.new, **opts)
         end
       end
     end

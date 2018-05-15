@@ -5,43 +5,42 @@ module Vissen
     module Effect
       # Vignette
       #
-      # Generates a static vignette.
+      # Generates a vignette.
       class Vignette < Base
-        param pos: Value::Vec,
-              radius: Value::Real,
-              spread: Value::Real
+        vec  :pos, default: [0.5, 0.5]
+        real :radius, default: 0.5
+        real :spread, default: 0.1
 
-        DEFAULTS = {
-          pos:    [0.5, 0.5],
-          radius: 0.5,
-          spread: 0.1
-        }.freeze
-
-        def initialize(context, *)
-          @vignette = context.alloc_points { 0.0 }
-          super
-        end
-
-        def render
+        def call(param)
           x, y   = param.pos
           radius = param.radius
           spread = param.spread
 
-          inner_radius_squared = spread >= radius ? 0.0 : (radius - spread)**2
-          outer_radius_squared = radius**2
+          value_fn = create_value_function param.radius, param.spread
 
-          context.distance_squared(x, y, @vignette).each_with_index do |d2, i|
-            value =
-              if d2 <= inner_radius_squared
+          proc do |context, block|
+            context.distance_squared(x, y).with_index do |d2, index|
+              value = value_fn.call d2
+              block.call value, index
+            end
+          end
+
+          private
+
+          def create_value_function(radius, spread)
+            inner_r_squared = spread >= radius ? 0.0 : (radius - spread)**2
+            outer_r_squared = radius**2
+
+            proc do |d2|
+              if d2 <= inner_r_squared
                 1.0
-              elsif d2 >= outer_radius_squared
+              elsif d2 >= outer_r_squared
                 0.0
               else
                 distance = Math.sqrt d2
                 (radius - distance) / spread
               end
-
-            yield value, i
+            end
           end
         end
       end

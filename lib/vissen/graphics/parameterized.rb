@@ -48,6 +48,8 @@ module Vissen
         @param_accessor
       end
 
+      # @return [true] if any of the parameter values have been changed.
+      # @return [false] otherwise.
       def tainted?
         @params.any? { |_, v| v.tainted? }
       end

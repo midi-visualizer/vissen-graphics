@@ -5,32 +5,32 @@ module Vissen
     module Effect
       # Generates a static gradient.
       class Point < Base
-        param position: Value::Vec,
-              value:    Value::Real,
-              spread:   Value::Real
+        vec  :position, default: [0.5, 0.5]
+        real :value, default: 1.0
+        real :spread, default: 0.2
 
-        DEFAULTS = {
-          position: [0.5, 0.5],
-          value: 1.0
-          spread: 0.2
-        }.freeze
-
-        def render
-          x, y = param.position
+        def call(param)
+          x, y      = param.position
           max_value = param.value
-          spread = param.spread
-          
-          fn =
-            if spread <= 0.001
-              ->(d2) { d2 <= 0.01 ? 1.0 : 0.0 }
-            else
-              c = -0.5 / spread
-              ->(d2) { Math.exp(c * d2) }
+
+          fn = create_threshold_function param.spread
+
+          proc do |context, block|
+            context.each_position do |index, x_i, y_i|
+              d2 = (x - x_i)**2 + (y - y_i)**2
+              block.call max_value * fn.call(d2), index
             end
-          
-          context.each_position do |index, x_i, y_i|
-            d2 = (x - x_i)**2 + (y - y_i)**2
-            yield max_value * fn.call d2
+          end
+        end
+
+        private
+
+        def create_threshold_function(spread)
+          if spread <= 0.001
+            ->(d2) { d2 <= 0.001 ? 1.0 : 0.0 }
+          else
+            c = -0.5 / spread
+            ->(d2) { Math.exp(c * d2) }
           end
         end
       end

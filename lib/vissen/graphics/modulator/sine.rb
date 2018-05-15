@@ -4,16 +4,15 @@ module Vissen
   module Graphics
     module Modulator
       class Sine < Base
-        DEFAULTS = {
-          frequency: 1.0
-        }.freeze
-
-        param frequency: Value::Real
+        real :frequency, default: 1.0
+        real :phase
+        real :t
 
         output Value::Real
 
-        def update(t)
-          Math.sin(t * param.frequency * Math::PI * 2.0) * 0.5 + 0.5
+        def call(param)
+          angle = (param.t * param.frequency + param.phase) * Math::PI * 2.0
+          Math.sin(angle) * 0.5 + 0.5
         end
       end
     end
