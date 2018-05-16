@@ -7,9 +7,10 @@ module Vissen
     #
     class Engine
       def initialize(mixers)
-        @mixers     = mixers
-        @mutex      = Mutex.new
+        @graph = Parameterized::Graph.new mixers
         @time_value = Parameterized::Value::Real.new
+
+        mixers.each { |mixer| autobind_time mixer }
       end
 
       def time
@@ -18,18 +19,23 @@ module Vissen
 
       def render(t)
         @time_value.write t
-
-        @mutex.synchronize do
-          @mixers.each(&:tainted?)
-          @mixers.each(&:untaint!)
-        end
+        @graph.update!
       end
 
       private
 
       # Each parameter named `:t` should automatically be bound to the time
       # value.
-      def autobind_time(parameterized); end
+      #
+      # TODO: avoid visiting each node more than once.
+      def autobind_time(parameterized)
+        if parameterized.respond_to?(:time_dependent?) &&
+           parameterized.time_dependent?
+          parameterized.bind_time(time)
+        end
+
+        parameterized.each_parameterized { |param| autobind_time param }
+      end
     end
   end
 end
