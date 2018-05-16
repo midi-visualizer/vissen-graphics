@@ -16,32 +16,29 @@ module Vissen
 
         ANGLE_FACTOR = (2.0 * Math::PI)
 
+        # rubocop:disable Metrics/AbcSize
+
+        # @param  param [Parameterize::Accessor] the effect parameters.
+        # @return [Proc]
         def call(param)
           angle  = param.angle * ANGLE_FACTOR
           spread = param.spread
           mean   = param.mean
 
-          proc do |context, proc|
-            x0, y0 = context.center
-            context.each_position do |index, x, y|
-              # Calculate the offset to the center of the gradient
-              x_offset = x - x0
-              y_offset = y - y0
-              # Find the angle alpha as the angle of the offset
-              # vector and theta as the difference between the
-              # gradient angle and alpha
-              alpha = Math.atan2 y_offset, x_offset
-              theta = angle - alpha
+          proc do |context, block|
+            context.each_polar_offset(*context.center)
+                   .with_index do |(distance, alpha), index|
               # Let a be the projection of the grid point onto
               # the gradient vector, scaled so that a = 1.0 in
               # the corners of a square
-              a = Math.cos(theta) *
-                  Math.sqrt(x_offset**2 + y_offset**2) * A_FACTOR
+              a = Math.cos(angle - alpha) * distance * A_FACTOR
 
-              proc.call a * spread + mean, index
+              block.call a * spread + mean, index
             end
           end
         end
+
+        # rubocop:enable Metrics/AbcSize
       end
     end
   end

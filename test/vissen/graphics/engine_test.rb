@@ -37,6 +37,5 @@ describe Vissen::Graphics::Engine do
     mod_r.bind(:t, engine.time)
 
     engine.render(0.5)
-    p stack.layers[0]
   end
 end

@@ -10,6 +10,8 @@ module Vissen
 
         output Value::Real
 
+        # @param  param [Parameterize::Accessor] the modulator parameters.
+        # @return [Numeric]
         def call(param)
           param.input_a + param.input_b
         end

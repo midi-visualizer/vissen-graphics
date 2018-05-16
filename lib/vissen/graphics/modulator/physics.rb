@@ -14,6 +14,8 @@ module Vissen
 
         output Value::Real
 
+        # @param  param [Parameterize::Accessor] the modulator parameters.
+        # @return [Numeric]
         def call(param)
           dt = param.t - param.t_0
           a  = param.acceleration

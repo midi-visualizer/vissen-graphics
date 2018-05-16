@@ -12,6 +12,8 @@ module Vissen
 
         output Value::Real
 
+        # @param  param [Parameterize::Accessor] the modulator parameters.
+        # @return [Numeric]
         def call(param)
           angle = (param.t * param.frequency + param.phase) * Math::PI * 2.0
           Math.sin(angle) * 0.5 + 0.5

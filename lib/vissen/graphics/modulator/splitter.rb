@@ -13,6 +13,8 @@ module Vissen
 
         output Value::Vec
 
+        # @param  param [Parameterize::Accessor] the modulator parameters.
+        # @return [Array<Numeric>]
         def call(param)
           [param.input_a, param.input_b]
         end

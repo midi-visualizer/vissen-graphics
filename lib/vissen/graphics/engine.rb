@@ -6,9 +6,6 @@ module Vissen
     #
     #
     class Engine
-      MATCHER = ->(mod) { ->(e) { e.value == mod } }
-      private_constant :MATCHER
-
       def initialize(mixers)
         @mixers     = mixers
         @mutex      = Mutex.new
@@ -27,6 +24,12 @@ module Vissen
           @mixers.each(&:untaint!)
         end
       end
+
+      private
+
+      # Each parameter named `:t` should automatically be bound to the time
+      # value.
+      def autobind_time(parameterized); end
     end
   end
 end

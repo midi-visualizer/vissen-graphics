@@ -12,6 +12,8 @@ module Vissen
 
         output Value::Real
 
+        # @param  param [Parameterize::Accessor] the modulator parameters.
+        # @return [Numeric]
         def call(param)
           param.input * param.amplitude + param.offset
         end
