@@ -31,7 +31,7 @@ module Vissen
         # @param  output [Value] the value type to use instead of `Renderer`.
         # @param  opts (see Parameterized).
         def initialize(output:, **opts)
-          super(output: output || Renderer.new, **opts)
+          super(output: output || Output.new, **opts)
         end
       end
     end

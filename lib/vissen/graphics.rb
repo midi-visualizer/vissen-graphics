@@ -16,13 +16,17 @@ require 'vissen/graphics/modulator/sine'
 require 'vissen/graphics/modulator/splitter'
 require 'vissen/graphics/modulator/sum'
 
-require 'vissen/graphics/renderer'
+require 'vissen/graphics/effect/output'
 require 'vissen/graphics/effect/base'
 require 'vissen/graphics/effect/gradient'
 require 'vissen/graphics/effect/vignette'
 require 'vissen/graphics/effect/point'
 
-require 'vissen/graphics/mixer'
+require 'vissen/graphics/mixer/output'
+require 'vissen/graphics/mixer/base'
+require 'vissen/graphics/mixer/absolute'
+require 'vissen/graphics/mixer/additive'
+require 'vissen/graphics/mixer/multiplicative'
 
 require 'vissen/graphics/engine'
 

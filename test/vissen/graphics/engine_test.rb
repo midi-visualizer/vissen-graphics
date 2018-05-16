@@ -15,16 +15,19 @@ describe Vissen::Graphics::Engine do
         angle: mod_r
       }
 
-      mixer = Vissen::Graphics::Mixer.new stack.layers[0], setup: {
+      mixer = Vissen::Graphics::Mixer::Absolute.new stack.layers[0], setup: {
         effect: effect,
-        mix_i: 0.0,
-        mix_p: 1.0
+        i: 0.0,
+        p: 1.0
       }
 
       engine = Vissen::Graphics::Engine.new [mixer]
 
       engine.render 0.5
       assert_equal 0.5, mod_r.params.t
+
+      engine.render 1.5
+      assert_equal 1.5, mod_r.params.t
     end
   end
 end

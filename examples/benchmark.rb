@@ -31,13 +31,18 @@ effect = Graphics::Effect::Gradient.new setup: {
   angle: mod_r
 }
 
-mixer = Graphics::Mixer.new stack.layers[0], setup: {
+mixer_a = Graphics::Mixer::Absolute.new stack.layers[0], setup: {
   effect: effect,
-  mix_i: mod_r,
-  mix_p: 1.0
+  i: mod_r,
+  p: 1.0
 }
 
-engine = Graphics::Engine.new [mixer]
+mixer_b = Graphics::Mixer::Multiplicative.new stack.layers[0], setup: {
+  effect: effect,
+  p: true
+}
+
+engine = Graphics::Engine.new [mixer_a, mixer_b]
 
 puts 'Benchmark results:'
 

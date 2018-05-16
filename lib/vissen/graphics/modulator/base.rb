@@ -19,10 +19,6 @@ module Vissen
         include Parameterized
         extend  Parameterized::DSL
 
-        def initialize(parameters:, **opts)
-          super(parameters: parameters, **opts)
-        end
-
         # @return [true] if the modulator has a parameter named t.
         # @return [false] otherwise.
         def time_dependent?

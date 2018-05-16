@@ -2,8 +2,6 @@
 
 module Vissen
   module Graphics
-    # The effect mixer takes an effect renderer as input and applies it to each
-    # vixel in a vixel layer.
     class Mixer
       include Parameterized
       extend  Parameterized::DSL
@@ -12,7 +10,7 @@ module Vissen
       real  :mix_p
       param :effect, Renderer
 
-      output Value::Bool
+      output Mixer
 
       # @param  vixel_buffer [VixelBuffer] the vixel layer the apply the effect
       #   to.

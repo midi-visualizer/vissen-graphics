@@ -19,7 +19,7 @@ module Vissen
 
       def render(t)
         @time_value.write t
-        @graph.update!
+        @graph.update! { |mix| mix.call }
       end
 
       private
