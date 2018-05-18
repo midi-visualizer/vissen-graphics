@@ -25,13 +25,11 @@ module Vissen
           effect  = param.effect
           vixels  = @layer.elements
           context = @layer.context
-          p 'drawing'
+
           effect.call(context, proc { |v, i| @buffer[i] = v })
 
           proc do
             @buffer.each_with_index { |v, i| mix v, param, vixels[i] }
-            #effect.call(context,
-            #            proc { |v, i| mix v, param, vixels[i] })
           end
         end
 
