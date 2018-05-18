@@ -9,9 +9,9 @@ require 'vissen/output'
 include Vissen
 # rubocop:enable Style/MixinUsage
 
-N = 1_000
+N = 10_000
 
-context = Output::Context::Grid.new 15, 15
+context = Output::Context::Grid.new 7, 8
 stack   = Output::VixelStack.new context, 1
 mod_r = Graphics::Modulator::Ramp.new
 mod_a = Graphics::Modulator::Bias.new setup: {
@@ -22,6 +22,12 @@ mod_a = Graphics::Modulator::Bias.new setup: {
 mod_b = Graphics::Modulator::Bias.new setup: {
   offset: 0.5,
   amplitude: 2.0,
+  input: mod_a
+}
+
+mod_c = Graphics::Modulator::Bias.new setup: {
+  offset: 0.1,
+  amplitude: 0.5,
   input: mod_a
 }
 
@@ -48,15 +54,20 @@ puts 'Benchmark results:'
 
 res =
   Benchmark.bm(10) do |x|
-    x.report('static') do
-      N.times { engine.render(0) }
+    x.report('dynamic') do
+      N.times { |n| engine.render(n * 0.01667) }
+    end
+    
+    x.report('dynamic + 1') do
+      effect.bind :mean, mod_c
+      N.times { |n| engine.render(n * 0.01667) }
     end
 
-    x.report('render') do
-      N.times { engine.render(Time.now.to_f) }
+    x.report('static') do
+      N.times { |n| engine.render(0.0) }
     end
   end
 
 puts
-puts format('%.2f us per frame', res.last.utime * (1_000_000 / N))
-puts format('%.0f frames per second', N / res.last.utime)
+puts format('%.2f us per frame', res.first.utime * (1_000_000 / N))
+puts format('%.0f frames per second', N / res.first.utime)
