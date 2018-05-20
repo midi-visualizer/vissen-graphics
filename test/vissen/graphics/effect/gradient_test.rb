@@ -10,7 +10,6 @@ describe Vissen::Graphics::Effect::Gradient do
   let(:context)  { Vissen::Output::Context::Grid.new rows, columns }
   let(:grid)     { Vissen::Output::VixelBuffer.new context }
   let(:effect)   { subject.new }
-  let(:t)        { 0 }
 
   describe '#update' do
     before do
@@ -18,18 +17,19 @@ describe Vissen::Graphics::Effect::Gradient do
     end
 
     it 'draws a horizontal gradient' do
+      effect.set :spread, 0.6666666667
       effect.set :angle, 0.0
       effect.tainted?
 
       effect.value.call(context, proc { |v, i| grid.vixels[i].p = v })
 
-      assert_equal 0.0, grid[0, 0].p
-      assert_equal 0.5, grid[0, 1].p
-      assert_equal 1.0, grid[0, 2].p
+      assert_in_delta 0.029, grid[0, 0].p
+      assert_in_delta 0.500, grid[0, 1].p
+      assert_in_delta 0.971, grid[0, 2].p
 
-      assert_equal 0.0, grid[1, 0].p
-      assert_equal 0.5, grid[1, 1].p
-      assert_equal 1.0, grid[1, 2].p
+      assert_in_delta 0.029, grid[1, 0].p
+      assert_in_delta 0.500, grid[1, 1].p
+      assert_in_delta 0.971, grid[1, 2].p
     end
 
     it 'draws a vertical gradient' do
