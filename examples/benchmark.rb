@@ -57,14 +57,14 @@ res =
     x.report('dynamic') do
       N.times { |n| engine.render(n * 0.01667) }
     end
-    
+
     x.report('dynamic + 1') do
       effect.bind :mean, mod_c
       N.times { |n| engine.render(n * 0.01667) }
     end
 
     x.report('static') do
-      N.times { |n| engine.render(0.0) }
+      N.times { engine.render(0.0) }
     end
   end
 
