@@ -1,8 +1,9 @@
-# Vissen::Graphics
+# 🥀 Vissen Graphics
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/vissen/graphics`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+[![Gem Version](https://badge.fury.io/rb/vissen-graphics.svg)](https://badge.fury.io/rb/vissen-graphics)
+[![Build Status](https://travis-ci.org/midi-visualizer/vissen-graphics.svg?branch=master)](https://travis-ci.org/midi-visualizer/vissen-graphics)
+[![Inline docs](http://inch-ci.org/github/midi-visualizer/vissen-graphics.svg?branch=master)](http://inch-ci.org/github/midi-visualizer/vissen-graphics)
+[![Documentation](http://img.shields.io/badge/docs-rdoc.info-blue.svg)](http://www.rubydoc.info/gems/vissen-graphics/)
 
 ## Installation
 
