@@ -6,6 +6,7 @@ module Vissen
     #
     #
     class Engine
+      # @param  mixers [Array<Mixer::Base>] the mixers to render.
       def initialize(mixers)
         @graph = Parameterized::Graph.new mixers
         @time_value = Parameterized::Value::Real.new
@@ -13,10 +14,14 @@ module Vissen
         mixers.each { |mixer| autobind_time mixer }
       end
 
+      # @return [Parameterized::Value] the current time value.
       def time
         @time_value
       end
 
+      # Renders the mixers and updates the output vixel buffers.
+      #
+      # @param  t [Numeric] the current time.
       def render(t)
         @time_value.write t
         @graph.update!(&:call)
@@ -28,13 +33,13 @@ module Vissen
       # value.
       #
       # TODO: avoid visiting each node more than once.
-      def autobind_time(parameterized)
-        if parameterized.respond_to?(:time_dependent?) &&
-           parameterized.time_dependent?
-          parameterized.bind_time(time)
+      def autobind_time(node)
+        # Only modulators should depend on time.
+        if node.is_a?(Modulator::Base) && node.time_dependent?
+          node.bind_time(time)
         end
 
-        parameterized.each_parameterized { |param| autobind_time param }
+        node.each_parameterized { |param| autobind_time param }
       end
     end
   end

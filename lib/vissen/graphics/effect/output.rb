@@ -25,6 +25,8 @@ module Vissen
       class Output
         include Parameterized::Value
 
+        # @return [Proc] the default effect output takes a context and a block
+        #   and does nothing.
         DEFAULT = ->(_, _) {}
 
         # Accepts a proc with arity two that accepts a context and another proc.

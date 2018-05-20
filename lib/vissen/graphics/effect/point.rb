@@ -9,7 +9,7 @@ module Vissen
         real :value, default: 1.0
         real :spread, default: 0.2
 
-        # @param  param [Parameterize::Accessor] the effect parameters.
+        # @param  param [Parameterized::Accessor] the effect parameters.
         # @return [Proc]
         def call(param)
           x, y      = param.position

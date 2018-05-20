@@ -3,6 +3,11 @@
 module Vissen
   module Graphics
     module Mixer
+      # Mixers are modeled as parameterized functions that take an effect
+      # output, posibly some other parameters and produces a mixer output. When
+      # called, the mixer output should affect the output layer stored in the
+      # mixer acording the the rendered effect and the particular mixer
+      # implementation.
       class Base
         include Parameterized
         extend  Parameterized::DSL
@@ -19,6 +24,8 @@ module Vissen
           super(parameters: parameters, output: output || Output.new, **opts)
         end
 
+        # @param  param [Parameterized::Accessor] the mixer parameters.
+        # @return [Proc]
         def call(param)
           effect  = param.effect
           vixels  = @layer.elements
@@ -31,6 +38,9 @@ module Vissen
           end
         end
 
+        # @param  _value [Numeric] the value to mix in.
+        # @param  _param [Parameterized::Accessor] the mixer parameters.
+        # @param  _vixel [Vissen::Output::Vixel] the vixel to update.
         def mix(_value, _param, _vixel); end
       end
     end

@@ -3,15 +3,13 @@
 module Vissen
   module Graphics
     module Effect
-      # Vignette
-      #
-      # Generates a vignette.
+      # Generates a vignette effect.
       class Vignette < Base
         vec  :pos, default: [0.5, 0.5]
         real :radius, default: 0.5
         real :spread, default: 0.1
 
-        # @param  param [Parameterize::Accessor] the effect parameters.
+        # @param  param [Parameterized::Accessor] the effect parameters.
         # @return [Proc]
         def call(param)
           x, y     = param.pos

@@ -27,6 +27,8 @@ module Vissen
       class Output
         include Parameterized::Value
 
+        # @return [Proc] the default mixer output takes does nothing to its
+        #   vixels.
         DEFAULT = -> {}
 
         # Accepts a proc with arity one that accepts a vixel buffer. When

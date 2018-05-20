@@ -15,10 +15,11 @@ module Vissen
         private_constant :A_FACTOR
 
         ANGLE_FACTOR = (2.0 * Math::PI)
+        private_constant :ANGLE_FACTOR
 
         # rubocop:disable Metrics/AbcSize
 
-        # @param  param [Parameterize::Accessor] the effect parameters.
+        # @param  param [Parameterized::Accessor] the effect parameters.
         # @return [Proc]
         def call(param)
           angle  = param.angle * ANGLE_FACTOR
