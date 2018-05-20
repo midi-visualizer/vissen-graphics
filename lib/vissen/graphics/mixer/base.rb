@@ -7,8 +7,6 @@ module Vissen
         include Parameterized
         extend  Parameterized::DSL
 
-        param :effect, Effect::Output
-
         # @param  output [Value] the value type to use instead of
         #   `Mixer::Output`.
         # @param  opts (see Parameterized).
